@@ -10,11 +10,11 @@ datasource db {
 }
 
 
-model POST{
+model idea{
   id          Int      @id @default(autoincrement())
   title       String
   description String         
-  upvotes     Int
+  upvotes     Int     @default(0)
   email  String
   createdAt   DateTime @default(now())
 }
