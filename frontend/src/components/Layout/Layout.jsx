@@ -4,9 +4,11 @@ import Header from './Header'
 const Layout = ({children}) => {
   return (
     <>
-    <Header/>
-    <main>
-      {children}
+    <main className='max-w-screen' >
+      <Header/>
+      <div>
+        {children}
+        </div>
     </main>
     </>
   )

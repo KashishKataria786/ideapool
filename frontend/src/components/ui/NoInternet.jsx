@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-// import NoInternet from '../assets/nointernet.png'
+import noInternet from '../../assets/nointernet.jpeg'
 
 const NoInternet = () => {
   const [isOnline,setIsOnline]= useState(true);
@@ -22,8 +22,8 @@ const NoInternet = () => {
   console.log(navigator.onLine)
 
   return (
-    <div className="absolute h-screen w-screen bg-black top-0 inset-0 flex flex-col items-center justify-center z-[50] space-y-3 ">
-      {/* <img className='h-[100px] w-auto' src={NoInternet}/> */}
+    <div className="absolute h-screen w-screen bg-[#F7F7F7] top-0 inset-0 flex flex-col items-center justify-center z-[50] space-y-3 ">
+      <img className='h-[200px] w-auto' src={noInternet}/>
       <h1 className="text-3xl font-bold mb-4">
          No Internet Connection
       </h1>
