@@ -52,3 +52,16 @@ my-project/
 ```bash
 git clone <your-repo-url>
 cd my-project
+
+cd frontend
+npm install
+
+
+cd ../backend
+npm install
+
+
+
+
+
+
