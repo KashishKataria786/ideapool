@@ -13,7 +13,7 @@ const IdeasPage = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/ideas");
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/ideas`);
       const data = await res.json();
       setIdeas(data);
     } catch (error) {
@@ -35,7 +35,7 @@ const IdeasPage = () => {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/add-idea", form);
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}api/add-idea`, form);
       setForm({ title: "", description: "", email: "" });
       fetchData();
     } catch (error) {
@@ -47,7 +47,7 @@ const IdeasPage = () => {
   const upvote = async (id) => {
     if (!id) return;
     try {
-      const { data } = await axios.patch(`http://localhost:5000/api/upvote/${id}`);
+      const { data } = await axios.patch(`${import.meta.env.VITE_BACKEND_URL}api/upvote/${id}`);
       toast.success("Upvoted successfully!");
       fetchData();
       return data;
