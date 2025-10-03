@@ -9,7 +9,7 @@ function App() {
     <>
     <Routes>
       <Route path ='/' element={<LandingPage/>}/>
-      <Route path='/ideas' element={<IdeasPage/>}/>
+      <Route path='/app' element={<IdeasPage/>}/>
       <Route path='*' element={<Notfound/>}/>
     </Routes>
     </>

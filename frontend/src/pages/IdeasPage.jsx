@@ -6,6 +6,7 @@ import axios from "axios";
 import Spinner from "../components/ui/Spinner";
 import { toast } from "react-toastify";
 import { IoArrowUpCircleSharp } from "react-icons/io5";
+
 const IdeasPage = () => {
   const [ideas, setIdeas] = useState([]);
   const [form, setForm] = useState({ title: "", description: "", email: "" });
@@ -19,7 +20,6 @@ const IdeasPage = () => {
       console.error("Error fetching ideas:", error);
     }
   }, []);
-
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -36,46 +36,49 @@ const IdeasPage = () => {
 
     try {
       await axios.post("http://localhost:5000/api/add-idea", form);
-      setForm({ title: "", description: "", email: "" }); 
-      fetchData(); 
+      setForm({ title: "", description: "", email: "" });
+      fetchData();
     } catch (error) {
       console.error("Error adding idea:", error);
+      toast.error("Failed to submit idea.");
     }
   };
 
-const upvote = async (id) => {
-  if (!id) return;
-
-  try {
-    const { data } = await axios.patch(`http://localhost:5000/api/upvote/${id}`);
-    toast.success("Upvoted successfully!");
-    return data; 
-  } catch (error) {
-    console.error("Error upvoting:", error);
-    toast.error("Failed to upvote. Please try again.");
-    return null;
-  }
-};
-
+  const upvote = async (id) => {
+    if (!id) return;
+    try {
+      const { data } = await axios.patch(`http://localhost:5000/api/upvote/${id}`);
+      toast.success("Upvoted successfully!");
+      fetchData();
+      return data;
+    } catch (error) {
+      console.error("Error upvoting:", error);
+      toast.error("Failed to upvote. Please try again.");
+      return null;
+    }
+  };
 
   useEffect(() => {
     fetchData();
-  }, [fetchData, upvote]);
+  }, [fetchData]);
 
   return (
     <Layout>
-
       <div
         className="w-screen h-screen relative bg-cover bg-center"
         style={{ backgroundImage: `url(${bgImage})` }}
       >
         {/* Scrollable Ideas Section */}
-        <div className="scroll h-screen overflow-y-auto py-20">
-          <div className="md:grid grid-cols-3 gap-4 max-w-[70vw] mx-auto">
+        <div className="h-screen overflow-y-auto py-20 pb-40">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-7xl w-full px-4 mx-auto sm:mb-20">
             {ideas.length > 0 ? (
-              ideas.map((item) => <IdeaCard key={item.id} idea={item} onUpvote={upvote} />)
+              ideas.map((item) => (
+                <IdeaCard key={item.id} idea={item} onUpvote={upvote} />
+              ))
             ) : (
-              <Spinner/>
+              <div className="col-span-full flex justify-center py-20">
+                <Spinner />
+              </div>
             )}
           </div>
         </div>
@@ -84,7 +87,7 @@ const upvote = async (id) => {
         <div className="fixed bottom-0 left-0 w-full flex justify-center z-40 pb-6">
           <form
             onSubmit={handleAddIdea}
-            className="flex gap-2 bg-black/20 backdrop-blur-md p-4 rounded-lg shadow-lg max-w-5xl w-full mx-4"
+            className="flex flex-col md:flex-row gap-2 bg-black/20 backdrop-blur-md p-4 rounded-lg shadow-lg max-w-5xl w-full mx-4"
           >
             {/* Email */}
             <input
@@ -111,14 +114,14 @@ const upvote = async (id) => {
               placeholder="Your idea..."
               value={form.description}
               onChange={handleChange}
-              className="flex-2 px-3 py-2 text-sm rounded-md border border-white/30 bg-white/70 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
+              className="flex-1 px-3 py-2 text-sm rounded-md border border-white/30 bg-white/70 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
             />
             {/* Submit */}
             <button
               type="submit"
-              className="p-2 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 shadow-md transition"
+              className="p-2 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 shadow-md transition flex items-center justify-center"
             >
-             <IoArrowUpCircleSharp size={30}/>
+              <IoArrowUpCircleSharp size={24} />
             </button>
           </form>
         </div>
